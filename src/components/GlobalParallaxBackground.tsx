@@ -2,66 +2,164 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+// 벚꽃잎 SVG 컴포넌트 - 둥글고 위에 홈이 파인 벚꽃잎
+function PetalSvg({ size, color }: { size: number; color: string }) {
+  const strokeColor = color.replace(/[\d.]+\)$/, '1.0)');
+
+  return (
+    <svg width={size} height={size * 1.15} viewBox="0 0 24 28">
+      {/* 벚꽃잎: 위쪽이 둥글고 가운데 홈이 깊게, 아래가 뾰족 */}
+      <path
+        d="M12 27
+           Q4 20 3 12
+           Q2 5 7 1
+           Q10 -0.5 12 5
+           Q14 -0.5 17 1
+           Q22 5 21 12
+           Q20 20 12 27Z"
+        fill={color}
+        stroke={strokeColor}
+        strokeWidth="0.4"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// 물방울 데이터 배열 - 꽃잎과 겹치지 않는 위치, 더 큰 크기
+const droplets = [
+  { top: '-15%', left: '-10%', size: 280, color: 'rgba(248, 180, 184, 0.12)' },
+  { top: '75vh', right: '-5%', size: 110, color: 'rgba(255, 192, 203, 0.11)' },
+  { top: '105vh', left: '-10%', size: 180, color: 'rgba(201, 168, 108, 0.1)' },
+];
+
+const petals = [
+  {
+    top: '40vh',
+    left: '85%',
+    size: 20,
+    color: 'rgba(255, 192, 203, 0.32)',
+    rotateGroup: 1,
+    initialRotate: -10,
+  },
+  {
+    top: '55vh',
+    left: '8%',
+    size: 24,
+    color: 'rgba(252, 213, 216, 0.25)',
+    rotateGroup: 2,
+    initialRotate: 30,
+  },
+  {
+    top: '70vh',
+    left: '60%',
+    size: 17,
+    color: 'rgba(248, 180, 184, 0.3)',
+    rotateGroup: 3,
+    initialRotate: -35,
+  },
+  {
+    top: '85vh',
+    left: '25%',
+    size: 21,
+    color: 'rgba(255, 182, 193, 0.28)',
+    rotateGroup: 1,
+    initialRotate: 50,
+  },
+  {
+    top: '108vh',
+    left: '15%',
+    size: 23,
+    color: 'rgba(252, 213, 216, 0.28)',
+    rotateGroup: 3,
+    initialRotate: 40,
+  },
+  {
+    top: '120vh',
+    left: '80%',
+    size: 18,
+    color: 'rgba(255, 192, 203, 0.3)',
+    rotateGroup: 1,
+    initialRotate: -30,
+  },
+];
+
 export function GlobalParallaxBackground() {
   const { scrollYProgress } = useScroll();
 
-  // 그라데이션: 가장 느리게 (스크롤의 10% 속도)
-  const gradientY = useTransform(scrollYProgress, [0, 1], ['0%', '-10%']);
-  // SVG 장식: 조금 더 빠르게 (스크롤의 20% 속도)
-  const decorY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  // 물방울: 가장 느리게 (스크롤의 8% 속도) - 멀리 있는 느낌
+  const dropletY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  // 꽃잎: 조금 더 빠르게 (스크롤의 18% 속도) - 가까이 있는 느낌
+  const petalY = useTransform(scrollYProgress, [0, 1], ['0%', '-40%']);
+
+  // 꽃잎 회전 그룹별 다른 회전값 (Z축)
+  const rotate1 = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const rotate2 = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const rotate3 = useTransform(scrollYProgress, [0, 1], [0, 150]);
+
+  // 플립 효과 (X축 회전만) - 스크롤 기반
+  const flipX1 = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 45, -30, 50, 0]);
+  const flipX2 = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, -40, 35, -45, 0]);
+  const flipX3 = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 50, -40, 35, 0]);
+
+  const getRotateZ = (group: number) => {
+    if (group === 1) return rotate1;
+    if (group === 2) return rotate2;
+    return rotate3;
+  };
+
+  const getFlipX = (group: number) => {
+    if (group === 1) return flipX1;
+    if (group === 2) return flipX2;
+    return flipX3;
+  };
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-0">
-      {/* CSS 그라데이션 배경 */}
-      <motion.div
-        className="absolute inset-x-0"
-        style={{
-          y: gradientY,
-          top: '-50vh',
-          height: '550vh',
-          background: `
-            radial-gradient(circle 120px at 15% 3%, rgba(248, 180, 184, 0.18) 0%, transparent 70%),
-            radial-gradient(circle 200px at 85% 8%, rgba(252, 213, 216, 0.15) 0%, transparent 70%),
-            radial-gradient(circle 80px at 80% 15%, rgba(201, 168, 108, 0.12) 0%, transparent 70%),
-            radial-gradient(circle 180px at 10% 20%, rgba(252, 213, 216, 0.14) 0%, transparent 70%),
-            radial-gradient(circle 100px at 20% 28%, rgba(248, 180, 184, 0.1) 0%, transparent 70%),
-            radial-gradient(circle 220px at 90% 32%, rgba(248, 180, 184, 0.16) 0%, transparent 70%),
-            radial-gradient(circle 70px at 75% 40%, rgba(201, 168, 108, 0.1) 0%, transparent 70%),
-            radial-gradient(circle 160px at 5% 45%, rgba(201, 168, 108, 0.12) 0%, transparent 70%),
-            radial-gradient(circle 90px at 25% 52%, rgba(252, 213, 216, 0.1) 0%, transparent 70%),
-            radial-gradient(circle 200px at 85% 55%, rgba(252, 213, 216, 0.14) 0%, transparent 70%),
-            radial-gradient(circle 130px at 70% 62%, rgba(248, 180, 184, 0.12) 0%, transparent 70%),
-            radial-gradient(circle 180px at 15% 68%, rgba(248, 180, 184, 0.15) 0%, transparent 70%),
-            radial-gradient(circle 60px at 30% 75%, rgba(201, 168, 108, 0.1) 0%, transparent 70%),
-            radial-gradient(circle 210px at 90% 78%, rgba(201, 168, 108, 0.13) 0%, transparent 70%),
-            radial-gradient(circle 100px at 80% 85%, rgba(252, 213, 216, 0.1) 0%, transparent 70%),
-            radial-gradient(circle 170px at 10% 88%, rgba(252, 213, 216, 0.14) 0%, transparent 70%),
-            radial-gradient(circle 140px at 50% 95%, rgba(248, 180, 184, 0.12) 0%, transparent 70%)
-          `,
-        }}
-      />
-      <motion.svg
-        className="absolute w-full"
-        style={{ height: '500vh', y: decorY }}
-        viewBox="0 0 400 2000"
-        preserveAspectRatio="xMidYMin slice"
-      >
-        {/* 전체에 분포하는 작은 점들 */}
-        <circle cx="100" cy="50" r="3" fill="#f8b4b8" opacity="0.25" />
-        <circle cx="300" cy="150" r="2.5" fill="#c9a86c" opacity="0.2" />
-        <circle cx="50" cy="300" r="3" fill="#fcd5d8" opacity="0.25" />
-        <circle cx="350" cy="450" r="2.5" fill="#f8b4b8" opacity="0.2" />
-        <circle cx="150" cy="600" r="3" fill="#c9a86c" opacity="0.25" />
-        <circle cx="250" cy="750" r="2.5" fill="#fcd5d8" opacity="0.2" />
-        <circle cx="80" cy="950" r="3" fill="#c9a86c" opacity="0.25" />
-        <circle cx="320" cy="1100" r="2.5" fill="#d4a574" opacity="0.2" />
-        <circle cx="180" cy="1250" r="3" fill="#c9a86c" opacity="0.25" />
-        <circle cx="60" cy="1400" r="2.5" fill="#f8b4b8" opacity="0.2" />
-        <circle cx="300" cy="1550" r="3" fill="#fcd5d8" opacity="0.25" />
-        <circle cx="120" cy="1700" r="2.5" fill="#f8b4b8" opacity="0.2" />
-        <circle cx="350" cy="1850" r="3" fill="#c9a86c" opacity="0.25" />
-        <circle cx="200" cy="1980" r="2.5" fill="#fcd5d8" opacity="0.2" />
-      </motion.svg>
+    <div
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
+      style={{ perspective: '1000px' }}
+    >
+      {/* 물방울들 - 느리게 */}
+      <motion.div className="absolute inset-0" style={{ y: dropletY }}>
+        {droplets.map((droplet, index) => {
+          const borderColor = droplet.color.replace(/[\d.]+\)$/, '0.10)');
+          return (
+            <div
+              key={`droplet-${index}`}
+              className="absolute rounded-full"
+              style={{
+                top: droplet.top,
+                left: droplet.left,
+                right: droplet.right,
+                width: droplet.size,
+                height: droplet.size,
+                background: droplet.color,
+                border: `1px solid ${borderColor}`,
+              }}
+            />
+          );
+        })}
+      </motion.div>
+
+      {/* 꽃잎들 - 조금 더 빠르게 */}
+      <motion.div className="absolute inset-0" style={{ y: petalY, transformStyle: 'preserve-3d' }}>
+        {petals.map((petal, index) => (
+          <motion.div
+            key={index}
+            className="absolute"
+            style={{
+              top: petal.top,
+              left: petal.left,
+              rotateZ: getRotateZ(petal.rotateGroup),
+              rotateX: getFlipX(petal.rotateGroup),
+              transformStyle: 'preserve-3d',
+            }}
+            initial={{ rotate: petal.initialRotate }}
+          >
+            <PetalSvg size={petal.size} color={petal.color} />
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 }
