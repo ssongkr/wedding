@@ -3,41 +3,199 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Spring Colors */
+  --spring-primary: #FFB7C5;
+  --spring-secondary: #98D8AA;
+  --spring-accent: #FFF5E4;
+  --spring-bg: #FDF6F0;
+  --spring-text: #5D4E37;
+
+  /* Summer Colors */
+  --summer-primary: #87CEEB;
+  --summer-secondary: #00CED1;
+  --summer-accent: #E0F7FA;
+  --summer-bg: #F0FFFF;
+  --summer-text: #2C4A52;
+
+  /* Autumn Colors */
+  --autumn-primary: #D2691E;
+  --autumn-secondary: #DAA520;
+  --autumn-accent: #FFF8DC;
+  --autumn-bg: #FAF3E0;
+  --autumn-text: #4A3728;
+
+  /* Winter Colors */
+  --winter-primary: #B0C4DE;
+  --winter-secondary: #E6E6FA;
+  --winter-accent: #F8F8FF;
+  --winter-bg: #FAFAFA;
+  --winter-text: #2F4F4F;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-noto-sans);
+  --font-serif: var(--font-noto-serif);
+
+  /* Spring */
+  --color-spring-primary: var(--spring-primary);
+  --color-spring-secondary: var(--spring-secondary);
+  --color-spring-accent: var(--spring-accent);
+  --color-spring-bg: var(--spring-bg);
+  --color-spring-text: var(--spring-text);
+
+  /* Summer */
+  --color-summer-primary: var(--summer-primary);
+  --color-summer-secondary: var(--summer-secondary);
+  --color-summer-accent: var(--summer-accent);
+  --color-summer-bg: var(--summer-bg);
+  --color-summer-text: var(--summer-text);
+
+  /* Autumn */
+  --color-autumn-primary: var(--autumn-primary);
+  --color-autumn-secondary: var(--autumn-secondary);
+  --color-autumn-accent: var(--autumn-accent);
+  --color-autumn-bg: var(--autumn-bg);
+  --color-autumn-text: var(--autumn-text);
+
+  /* Winter */
+  --color-winter-primary: var(--winter-primary);
+  --color-winter-secondary: var(--winter-secondary);
+  --color-winter-accent: var(--winter-accent);
+  --color-winter-bg: var(--winter-bg);
+  --color-winter-text: var(--winter-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-noto-sans), Arial, sans-serif;
+  overflow-x: hidden;
 }
 
-/* 3D Transform Utilities */
-.perspective-1000 {
-  perspective: 1000px;
+/* Liquid Glass Effect */
+.liquid-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
 }
 
-.transform-style-3d {
-  transform-style: preserve-3d;
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 100%
+  );
+  border-radius: 24px 24px 0 0;
+  pointer-events: none;
 }
 
-.backface-hidden {
-  backface-visibility: hidden;
+/* Season-specific Glass Variants */
+.liquid-glass-spring {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 183, 197, 0.25) 0%,
+    rgba(255, 245, 228, 0.15) 100%
+  );
+  border-color: rgba(255, 183, 197, 0.35);
 }
 
-.rotate-y-180 {
-  transform: rotateY(180deg);
+.liquid-glass-summer {
+  background: linear-gradient(
+    135deg,
+    rgba(135, 206, 235, 0.25) 0%,
+    rgba(224, 247, 250, 0.15) 100%
+  );
+  border-color: rgba(135, 206, 235, 0.35);
+}
+
+.liquid-glass-autumn {
+  background: linear-gradient(
+    135deg,
+    rgba(218, 165, 32, 0.2) 0%,
+    rgba(255, 248, 220, 0.15) 100%
+  );
+  border-color: rgba(218, 165, 32, 0.3);
+}
+
+.liquid-glass-winter {
+  background: linear-gradient(
+    135deg,
+    rgba(230, 230, 250, 0.35) 0%,
+    rgba(248, 248, 255, 0.25) 100%
+  );
+  border-color: rgba(176, 196, 222, 0.35);
+}
+
+/* Interactive Glass */
+.liquid-glass-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.liquid-glass-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+.liquid-glass-interactive:active {
+  transform: translateY(0);
+}
+
+/* Touch Optimization */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
