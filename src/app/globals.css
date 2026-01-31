@@ -21,6 +21,7 @@
   --font-sans: var(--font-noto-sans);
   --font-serif: var(--font-noto-serif);
   --font-cursive: var(--font-alex-brush);
+  --font-alex-brush: var(--font-alex-brush);
 
   /* Wedding Theme */
   --color-wedding-bg: var(--wedding-bg);

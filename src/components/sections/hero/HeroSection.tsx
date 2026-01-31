@@ -30,10 +30,10 @@ export function HeroSection({
   const dateInfo = weddingDate ? formatWeddingDate(weddingDate) : null;
 
   return (
-    <section id="hero" className="flex flex-col px-6 py-12">
+    <section id="hero" className="flex h-dvh flex-col justify-center px-6 py-12">
       {/* 상단 타이틀 */}
       <motion.p
-        className="text-wedding-pink font-alex-brush font-alex-brush mb-8 text-center text-4xl"
+        className="text-wedding-pink font-alex-brush mb-8 text-center text-4xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -43,22 +43,24 @@ export function HeroSection({
 
       {/* 메인 이미지 - 심플 액자 */}
       <motion.div
-        className="mx-auto my-8 w-full max-w-md flex-1"
+        className="mx-auto w-full max-w-80"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8 }}
       >
-        <div className="bg-wedding-brown/80 relative aspect-[3/4] rounded-sm p-2">
+        <div className="relative aspect-[3/4]">
           <div className="relative h-full w-full overflow-hidden">
             <img src={mainImage} alt="Wedding" className="h-full w-full object-cover" />
-            {/* 내부 비네팅 (들어간 느낌) */}
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                boxShadow: 'inset 0 0 30px rgba(0,0,0,0.2)',
-              }}
-            />
           </div>
+          {/* 테두리 바깥 블러 효과 */}
+          <div
+            className="pointer-events-none absolute inset-0 backdrop-blur-[2px]"
+            style={{
+              clipPath:
+                'polygon(0% 0%, 0% 100%, 3.75% 100%, 3.75% 2.8%, 96.25% 2.8%, 96.25% 97.2%, 3.75% 97.2%, 3.75% 100%, 100% 100%, 100% 0%)',
+            }}
+          />
+          <div className="pointer-events-none absolute inset-3 border-2 border-white" />
         </div>
       </motion.div>
 
