@@ -19,9 +19,14 @@ export const weddingInfo: WeddingInfo = {
   venue: {
     name: '네이버 그린팩토리',
     hall: '커넥트홀 2층',
-    address: '서울시 강남구 테헤란로 123',
+    address: '성남시 분당구 정자동 178-1',
+    roadAddress: '경기도 성남시 분당구 불정로 6',
     phone: '02-1234-5678',
     mapUrl: 'https://map.kakao.com/',
+    coordinates: {
+      lat: 37.3595,
+      lng: 127.1052,
+    },
   },
   message: `서로 다른 길을 걸어온 두 사람이
 이제 하나의 길을 함께 걸어가려 합니다.
@@ -70,7 +75,6 @@ export const weddingInfo: WeddingInfo = {
 };
 
 export const transportInfo = {
-  subway: '2호선 강남역 3번 출구에서 도보 5분',
-  bus: '강남역 정류장 하차 (146, 341, 360)',
-  car: '지하 주차장 이용 가능 (3시간 무료)',
+  subway: '정자역 3번 출구에서 2번 버스 (도보 15분)',
+  car: '네이버 그린팩토리 지하 주차장 (무료)',
 };

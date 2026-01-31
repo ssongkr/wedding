@@ -3,29 +3,32 @@
 import { motion } from 'framer-motion';
 import { Section } from '@/components/layout/Section';
 import { LiquidGlass } from '@/components/ui/LiquidGlass';
+import { NaverMap } from '@/components/map/NaverMap';
 
 interface VenueSectionProps {
-  date?: string;
-  time?: string;
-  venueName?: string;
-  venueHall?: string;
-  venueAddress?: string;
-  venuePhone?: string;
-  mapUrl?: string;
-  transport?: {
-    subway?: string;
-    bus?: string;
-    car?: string;
+  date: string;
+  time: string;
+  venueName: string;
+  venueHall: string;
+  venueAddress: string;
+  venueRoadAddress: string;
+  venuePhone: string;
+  mapUrl: string;
+  lat: number;
+  lng: number;
+  transport: {
+    subway: string;
+    bus: string;
+    car: string;
   };
 }
 
-// 리퀴드 글래스 버튼 컴포넌트
 function GlassButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
   return (
-    <LiquidGlass borderRadius={50} className="inline-block">
+    <LiquidGlass borderRadius={50} className="block" scale={30} blur={2}>
       <button
         onClick={onClick}
-        className="text-wedding-text px-6 py-3 text-sm font-medium transition-transform hover:scale-105 active:scale-95"
+        className="text-wedding-text bg-wedding-pink/25 border-wedding-pink/30 w-full rounded-full border px-6 py-3 text-sm font-semibold"
       >
         {children}
       </button>
@@ -34,35 +37,29 @@ function GlassButton({ children, onClick }: { children: React.ReactNode; onClick
 }
 
 export function VenueSection({
-  date = '2025년 5월 10일',
-  time = '오후 2시',
-  venueName = '예식장',
-  venueHall = '그랜드홀',
-  venueAddress = '서울시 강남구',
-  venuePhone,
-  mapUrl,
+  date,
+  time,
+  venueName,
+  venueRoadAddress,
+  lat,
+  lng,
   transport,
 }: VenueSectionProps) {
-  const handleOpenMap = () => {
-    if (mapUrl) {
-      window.open(mapUrl, '_blank');
-    }
+  const handleOpenNaverMap = () => {
+    const naverMapUrl = `https://map.naver.com/p/search/${encodeURIComponent(venueName)}?c=${lng},${lat},15,0,0,0,dh`;
+    window.open(naverMapUrl, '_blank');
   };
 
-  const handleCopyAddress = async () => {
-    try {
-      await navigator.clipboard.writeText(venueAddress);
-      alert('주소가 복사되었습니다.');
-    } catch {
-      alert('주소 복사에 실패했습니다.');
-    }
+  const handleOpenKakaoMap = () => {
+    const kakaoMapUrl = `https://map.kakao.com/link/map/${encodeURIComponent(venueName)},${lat},${lng}`;
+    window.open(kakaoMapUrl, '_blank');
   };
 
   return (
     <Section id="venue" className="flex items-center justify-center">
       <div className="mx-auto w-full max-w-md">
         <motion.h2
-          className="text-wedding-text mb-10 text-center text-2xl font-[var(--font-noto-serif)]"
+          className="text-wedding-text mb-10 text-center text-3xl font-medium"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -78,35 +75,47 @@ export function VenueSection({
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <LiquidGlass className="mb-6" scale={30} blur={2}>
-            <div className="space-y-4 p-6 text-center">
-              <div>
-                <p className="text-wedding-pink text-lg font-medium">{date}</p>
-                <p className="text-wedding-text-muted">{time}</p>
-              </div>
-
-              <div className="bg-wedding-pink/40 mx-auto h-px w-12" />
-
-              <div>
-                <p className="text-wedding-text text-lg font-medium">{venueName}</p>
-                {venueHall && <p className="text-wedding-text-muted text-sm">{venueHall}</p>}
-                <p className="text-wedding-text-muted mt-1 text-sm">{venueAddress}</p>
-                {venuePhone && <p className="text-wedding-gold mt-2 text-xs">Tel. {venuePhone}</p>}
-              </div>
+          <div className="space-y-4 text-center">
+            <div>
+              <p className="text-wedding-text text-lg">
+                {date}
+                <br />
+                {time}
+              </p>
             </div>
-          </LiquidGlass>
+            <div className="bg-wedding-pink/30 mx-auto h-4 w-[2px] rounded-full" />
+            <div>
+              <p className="text-wedding-text mb-3 text-lg">
+                {venueName}
+                <br />
+                커넥트홀 2층
+              </p>
+              <p className="text-wedding-text-muted mt-1 text-sm">{venueRoadAddress}</p>
+            </div>
+            <div className="bg-wedding-pink/30 mx-auto h-4 w-[2px] rounded-full" />
+            <motion.div
+              className="mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="border-wedding-pink/50 overflow-hidden rounded-xl border-1">
+                <NaverMap lat={lat} lng={lng} className="h-64 w-full" />
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
 
-        {/* 버튼들 - 리퀴드 글래스 */}
         <motion.div
-          className="flex justify-center gap-3"
+          className="grid grid-cols-2 gap-3"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.3 }}
         >
-          {mapUrl && <GlassButton onClick={handleOpenMap}>지도 보기</GlassButton>}
-          <GlassButton onClick={handleCopyAddress}>주소 복사</GlassButton>
+          <GlassButton onClick={handleOpenKakaoMap}>카카오맵</GlassButton>
+          <GlassButton onClick={handleOpenNaverMap}>네이버지도</GlassButton>
         </motion.div>
 
         {/* 교통 안내 - 리퀴드 글래스 */}
@@ -115,32 +124,19 @@ export function VenueSection({
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.4 }}
           >
             <LiquidGlass className="mt-6" scale={30} blur={2}>
-              <div className="p-6">
-                <h3 className="text-wedding-text mb-4 text-center text-sm font-medium">
-                  오시는 길
-                </h3>
-                <div className="space-y-3 text-sm">
-                  {transport.subway && (
-                    <div className="flex gap-3">
-                      <span className="text-wedding-pink min-w-[50px] font-medium">지하철</span>
-                      <span className="text-wedding-text-muted">{transport.subway}</span>
-                    </div>
-                  )}
-                  {transport.bus && (
-                    <div className="flex gap-3">
-                      <span className="text-wedding-pink min-w-[50px] font-medium">버스</span>
-                      <span className="text-wedding-text-muted">{transport.bus}</span>
-                    </div>
-                  )}
-                  {transport.car && (
-                    <div className="flex gap-3">
-                      <span className="text-wedding-pink min-w-[50px] font-medium">자가용</span>
-                      <span className="text-wedding-text-muted">{transport.car}</span>
-                    </div>
-                  )}
+              <div className="px-5 py-6">
+                <div className="space-y-3 text-sm font-medium">
+                  <div className="flex gap-3">
+                    <span className="text-wedding-text min-w-[50px] shrink-0">대중교통</span>
+                    <span className="text-wedding-text-muted font-normal">{transport.subway}</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-wedding-text min-w-[50px] shrink-0">자가용</span>
+                    <span className="text-wedding-text-muted">{transport.car}</span>
+                  </div>
                 </div>
               </div>
             </LiquidGlass>

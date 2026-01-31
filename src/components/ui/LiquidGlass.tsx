@@ -92,7 +92,7 @@ export function LiquidGlass({
             inset: 0,
             zIndex: 2,
             boxShadow:
-              'inset 2px 2px 6px 0 rgba(255, 255, 255, 0.6), inset -0px -0px 0px 0 rgba(232, 180, 184, 0.3), inset 0 0 0 1px rgba(232, 180, 184, 0.2)',
+              'inset 2px 2px 6px 0 rgba(255, 255, 255, 0.6), inset 0px 0px 12px 0 rgba(232, 180, 184, 0.25), inset 0 0 0 1px rgba(232, 180, 184, 0.3)',
             borderRadius: 'inherit',
             pointerEvents: 'none',
           }}

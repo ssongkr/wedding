@@ -31,9 +31,9 @@ export function GallerySection({
 
   return (
     <Section id="gallery" className="flex items-center justify-center">
-      <div className="w-full max-w-md mx-auto">
+      <div className="mx-auto w-full max-w-md">
         <motion.h2
-          className="font-[var(--font-noto-serif)] text-2xl text-center text-wedding-text mb-10"
+          className="text-wedding-text mb-10 text-center text-2xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -44,7 +44,7 @@ export function GallerySection({
 
         {images.length > 0 ? (
           <motion.div
-            className="soft-card p-0 overflow-hidden"
+            className="soft-card overflow-hidden p-0"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -55,7 +55,7 @@ export function GallerySection({
                 key={currentIndex}
                 src={images[currentIndex]}
                 alt={`Gallery image ${currentIndex + 1}`}
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
@@ -66,20 +66,30 @@ export function GallerySection({
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-wedding-text hover:bg-white transition-colors shadow-sm"
+                    className="text-wedding-text absolute top-1/2 left-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
                     aria-label="이전 사진"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
                     </svg>
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-wedding-text hover:bg-white transition-colors shadow-sm"
+                    className="text-wedding-text absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
                     aria-label="다음 사진"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </button>
                 </>
@@ -87,15 +97,13 @@ export function GallerySection({
 
               {/* 페이지 인디케이터 */}
               {images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
                   {images.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentIndex(idx)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        idx === currentIndex
-                          ? 'bg-white w-4'
-                          : 'bg-white/50'
+                      className={`h-2 w-2 rounded-full transition-all ${
+                        idx === currentIndex ? 'w-4 bg-white' : 'bg-white/50'
                       }`}
                       aria-label={`${idx + 1}번 사진`}
                     />
@@ -112,10 +120,10 @@ export function GallerySection({
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
           >
-            <div className="aspect-[4/5] flex items-center justify-center">
-              <div className="text-center text-wedding-text-muted">
+            <div className="flex aspect-[4/5] items-center justify-center">
+              <div className="text-wedding-text-muted text-center">
                 <svg
-                  className="w-16 h-16 mx-auto mb-4 opacity-50"
+                  className="mx-auto mb-4 h-16 w-16 opacity-50"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -134,7 +142,7 @@ export function GallerySection({
         )}
 
         <motion.p
-          className="mt-8 text-center text-wedding-text-muted text-sm"
+          className="text-wedding-text-muted mt-8 text-center text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

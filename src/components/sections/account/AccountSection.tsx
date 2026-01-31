@@ -12,13 +12,7 @@ interface AccountSectionProps {
   brideName?: string;
 }
 
-function AccountCard({
-  accounts,
-  title,
-}: {
-  accounts: AccountInfo[];
-  title: string;
-}) {
+function AccountCard({ accounts, title }: { accounts: AccountInfo[]; title: string }) {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleCopy = async (account: AccountInfo, index: number) => {
@@ -35,11 +29,11 @@ function AccountCard({
 
   return (
     <div className="space-y-3">
-      <h4 className="text-wedding-text-muted text-sm text-center">{title}</h4>
+      <h4 className="text-wedding-text-muted text-center text-sm">{title}</h4>
       {accounts.map((account, idx) => (
         <motion.div
           key={idx}
-          className="flex items-center justify-between p-4 rounded-xl bg-white/70"
+          className="flex items-center justify-between rounded-xl bg-white/70 p-4"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -50,13 +44,11 @@ function AccountCard({
               {account.bank} · {account.holder}
               {account.relation && ` (${account.relation})`}
             </p>
-            <p className="text-wedding-text font-medium mt-1">
-              {account.accountNumber}
-            </p>
+            <p className="text-wedding-text mt-1 font-medium">{account.accountNumber}</p>
           </div>
           <button
             onClick={() => handleCopy(account, idx)}
-            className="ml-3 px-4 py-2 text-xs rounded-full bg-wedding-pink/20 text-wedding-text hover:bg-wedding-pink/30 transition-colors"
+            className="bg-wedding-pink/20 text-wedding-text hover:bg-wedding-pink/30 ml-3 rounded-full px-4 py-2 text-xs transition-colors"
           >
             {copiedIndex === idx ? '복사됨!' : '복사'}
           </button>
@@ -99,9 +91,9 @@ export function AccountSection({
 
   return (
     <Section id="account" className="flex items-center justify-center">
-      <div className="w-full max-w-md mx-auto">
+      <div className="mx-auto w-full max-w-md">
         <motion.h2
-          className="font-[var(--font-noto-serif)] text-2xl text-center text-wedding-text mb-10"
+          className="text-wedding-text mb-10 text-center text-2xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -119,10 +111,10 @@ export function AccountSection({
             transition={{ delay: 0.1 }}
           >
             {/* 탭 버튼 */}
-            <div className="flex gap-2 mb-6">
+            <div className="mb-6 flex gap-2">
               <button
                 onClick={() => setActiveTab('groom')}
-                className={`flex-1 py-2.5 text-sm rounded-full transition-all ${
+                className={`flex-1 rounded-full py-2.5 text-sm transition-all ${
                   activeTab === 'groom'
                     ? 'bg-wedding-pink/30 text-wedding-text font-medium'
                     : 'text-wedding-text-muted hover:text-wedding-text'
@@ -132,7 +124,7 @@ export function AccountSection({
               </button>
               <button
                 onClick={() => setActiveTab('bride')}
-                className={`flex-1 py-2.5 text-sm rounded-full transition-all ${
+                className={`flex-1 rounded-full py-2.5 text-sm transition-all ${
                   activeTab === 'bride'
                     ? 'bg-wedding-pink/30 text-wedding-text font-medium'
                     : 'text-wedding-text-muted hover:text-wedding-text'
@@ -150,15 +142,9 @@ export function AccountSection({
               transition={{ duration: 0.2 }}
             >
               {activeTab === 'groom' ? (
-                <AccountCard
-                  accounts={groomAccounts}
-                  title={`${groomName}측 계좌`}
-                />
+                <AccountCard accounts={groomAccounts} title={`${groomName}측 계좌`} />
               ) : (
-                <AccountCard
-                  accounts={brideAccounts}
-                  title={`${brideName}측 계좌`}
-                />
+                <AccountCard accounts={brideAccounts} title={`${brideName}측 계좌`} />
               )}
             </motion.div>
           </motion.div>
@@ -174,7 +160,7 @@ export function AccountSection({
         >
           <button onClick={handleShare} className="soft-button">
             <span className="flex items-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -195,8 +181,8 @@ export function AccountSection({
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <p className="text-wedding-pink text-xs tracking-widest mb-2">THANK YOU</p>
-          <p className="font-[var(--font-noto-serif)] text-wedding-text-muted">
+          <p className="text-wedding-pink mb-2 text-xs tracking-widest">THANK YOU</p>
+          <p className="text-wedding-text-muted">
             {groomName} & {brideName}
           </p>
         </motion.footer>

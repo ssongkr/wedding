@@ -17,14 +17,14 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="flex h-svh flex-col px-6 pt-12">
-      <motion.p
+      <motion.h1
         className="font-alex-brush text-wedding-text mb-6 text-center text-[44px] font-medium"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.4 }}
       >
         Wedding Day
-      </motion.p>
+      </motion.h1>
       <motion.div
         className="mx-auto mb-10 w-full max-w-80"
         initial={{ opacity: 0, y: 20 }}
@@ -52,11 +52,11 @@ export function HeroSection({
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.4 }}
       >
-        <h1 className="text-wedding-text text-2xl font-[var(--font-noto-serif)] tracking-wider">
+        <h2 className="text-wedding-text text-2xl tracking-wider">
           {groomName}
           <span className="text-wedding-text mx-2 text-lg">&</span>
           {brideName}
-        </h1>
+        </h2>
       </motion.div>
 
       <motion.div

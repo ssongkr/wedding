@@ -44,8 +44,11 @@ export default function Home() {
           venueName={weddingInfo.venue.name}
           venueHall={weddingInfo.venue.hall}
           venueAddress={weddingInfo.venue.address}
+          venueRoadAddress={weddingInfo.venue.roadAddress}
           venuePhone={weddingInfo.venue.phone}
           mapUrl={weddingInfo.venue.mapUrl}
+          lat={weddingInfo.venue.coordinates?.lat ?? 37.5665}
+          lng={weddingInfo.venue.coordinates?.lng ?? 126.978}
           transport={transportInfo}
         />
 
