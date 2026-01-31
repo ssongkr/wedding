@@ -5,6 +5,7 @@ import { VenueSection } from '@/components/sections/venue/VenueSection';
 import { GallerySection } from '@/components/sections/gallery/GallerySection';
 import { AccountSection } from '@/components/sections/account/AccountSection';
 import { GlobalParallaxBackground } from '@/components/GlobalParallaxBackground';
+import { SectionDivider } from '@/components/ui/SectionDivider';
 import { weddingInfo, transportInfo } from '@/constants/weddingData';
 
 export default function Home() {
@@ -34,6 +35,8 @@ export default function Home() {
           mainImage="/images/1.jpg"
         />
 
+        <SectionDivider />
+
         {/* 예식 안내 */}
         <VenueSection
           date={formatDate(weddingInfo.date)}
@@ -46,12 +49,16 @@ export default function Home() {
           transport={transportInfo}
         />
 
+        <SectionDivider />
+
         {/* 갤러리 */}
         <GallerySection
           images={weddingInfo.gallery}
           groomName={weddingInfo.groom.name}
           brideName={weddingInfo.bride.name}
         />
+
+        <SectionDivider />
 
         {/* 마음 전하기 */}
         <AccountSection

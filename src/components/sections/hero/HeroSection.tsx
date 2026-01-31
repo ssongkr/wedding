@@ -33,12 +33,12 @@ export function HeroSection({
     <section id="hero" className="flex flex-col px-6 py-12">
       {/* 상단 타이틀 */}
       <motion.p
-        className="text-wedding-pink mb-8 text-center text-xs font-light tracking-[0.3em]"
+        className="text-wedding-pink font-alex-brush font-alex-brush mb-8 text-center text-4xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        WEDDING INVITATION
+        Wedding Day
       </motion.p>
 
       {/* 메인 이미지 - 심플 액자 */}
@@ -93,15 +93,6 @@ export function HeroSection({
             </p>
           </div>
         )}
-
-        {/* 스크롤 안내 */}
-        <motion.div
-          className="mt-10"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <div className="from-wedding-pink/60 mx-auto h-8 w-px bg-gradient-to-b to-transparent" />
-        </motion.div>
       </motion.div>
     </section>
   );
