@@ -11,8 +11,8 @@ export const weddingInfo: WeddingInfo = {
   bride: {
     name: '김진경',
     phone: '010-3125-7231',
-    father: '김김김',
-    mother: '박박박',
+    father: '김병옥',
+    mother: '이묘숙',
   },
   date: '2026-06-20',
   time: '오후 12시',

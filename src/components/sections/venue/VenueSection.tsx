@@ -66,7 +66,7 @@ export function VenueSection({
     <Section id="venue" className="flex items-center justify-center">
       <div className="mx-auto w-full max-w-md">
         <motion.h2
-          className="text-wedding-text mb-10 text-center text-3xl font-medium"
+          className="text-wedding-text mb-10 text-center text-2xl font-medium"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -84,7 +84,7 @@ export function VenueSection({
         >
           <div className="space-y-4 text-center">
             <div>
-              <p className="text-wedding-text text-lg">
+              <p className="text-wedding-text text-base">
                 {date}
                 <br />
                 {time}
@@ -92,7 +92,7 @@ export function VenueSection({
             </div>
             <div className="bg-wedding-pink/30 mx-auto h-3 w-[2px] rounded-full" />
             <div>
-              <p className="text-wedding-text mb-3 text-lg">
+              <p className="text-wedding-text mb-3 text-base">
                 {venueName}
                 <br />
                 {venueHall}

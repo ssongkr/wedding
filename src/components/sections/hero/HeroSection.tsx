@@ -66,8 +66,8 @@ export function HeroSection({
         transition={{ delay: 0.5, duration: 0.4 }}
       >
         <div className="flex w-full flex-col">
-          <p className="text-wedding-pink text-center text-lg">소중한 분들을</p>
-          <p className="text-wedding-pink text-center text-lg">초대합니다.</p>
+          <p className="text-wedding-pink text-center text-base">소중한 분들을</p>
+          <p className="text-wedding-pink text-center text-base">초대합니다.</p>
         </div>
       </motion.div>
     </section>

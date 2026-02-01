@@ -22,7 +22,7 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
     <Section id="gallery" className="flex items-center justify-center">
       <div className="mx-auto w-full max-w-md">
         <motion.h2
-          className="text-wedding-text mb-10 text-center text-3xl font-medium"
+          className="text-wedding-text mb-10 text-center text-2xl font-medium"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -41,10 +41,10 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
             transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
             <div className="text-right">
-              <p className="text-wedding-text/60 text-xs">
+              <p className="text-wedding-text/60 text-sm">
                 {groom.fatherName} · {groom.motherName}의 {groom.birthOrder}
               </p>
-              <p className="text-wedding-text mt-1 text-sm font-medium">{groom.name}</p>
+              <p className="text-wedding-text mt-1 text-base font-medium">{groom.name}</p>
             </div>
             <motion.div
               className="shrink-0 rounded-sm bg-white p-1.5 pb-3"
@@ -95,10 +95,10 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
               </div>
             </motion.div>
             <div className="text-left">
-              <p className="text-wedding-text/60 text-xs">
+              <p className="text-wedding-text/60 text-sm">
                 {bride.fatherName} · {bride.motherName}의 {bride.birthOrder}
               </p>
-              <p className="text-wedding-text mt-1 text-sm font-medium">{bride.name}</p>
+              <p className="text-wedding-text mt-1 text-base font-medium">{bride.name}</p>
             </div>
           </motion.div>
         )}
