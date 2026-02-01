@@ -81,25 +81,43 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
           </motion.div>
         )}
 
-        {/* 갤러리 */}
+        {/* 갤러리 - 폴라로이드 스타일 */}
         {galleryImages.length > 0 && (
-          <motion.div
-            className="mt-6 grid grid-cols-3 gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-          >
-            {galleryImages.map((image, idx) => (
-              <div key={idx} className="border-wedding-pink/30 overflow-hidden rounded-lg border">
-                <img
-                  src={image}
-                  alt={`갤러리 ${idx + 1}`}
-                  className="aspect-square w-full object-cover"
-                />
-              </div>
-            ))}
-          </motion.div>
+          <div className="mt-12 grid grid-cols-2 gap-5">
+            {galleryImages.map((image, idx) => {
+              const isLarge = idx === 0 || idx === 3;
+              const rotations = [-2, 1.5, -1, 2, -1.5, 1];
+              const rotation = rotations[idx % rotations.length];
+              return (
+                <motion.div
+                  key={idx}
+                  className={isLarge ? 'col-span-2 flex justify-center' : ''}
+                  initial={{ opacity: 0, y: 30, scale: 0.95, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1, rotate: rotation }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{
+                    duration: 0.5,
+                    delay: idx * 0.1,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <div
+                    className={`rounded-sm bg-white p-2 pb-4 shadow-md ${
+                      isLarge ? 'w-3/4' : 'w-full'
+                    }`}
+                  >
+                    <div className={isLarge ? 'aspect-[4/3]' : 'aspect-square'}>
+                      <img
+                        src={image}
+                        alt={`갤러리 ${idx + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         )}
       </div>
     </Section>
