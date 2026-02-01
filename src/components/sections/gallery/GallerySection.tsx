@@ -47,7 +47,7 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
               <p className="text-wedding-text mt-1 text-sm font-medium">{groom.name}</p>
             </div>
             <motion.div
-              className="shrink-0 rounded-sm bg-[#fffaf8] p-1.5 pb-3"
+              className="shrink-0 rounded-sm bg-white p-1.5 pb-3"
               style={{
                 boxShadow: '0 3px 10px rgba(180, 140, 140, 0.2), 0 1px 3px rgba(0, 0, 0, 0.06)',
               }}
@@ -77,7 +77,7 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
             transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
           >
             <motion.div
-              className="shrink-0 rounded-sm bg-[#fffaf8] p-1.5 pb-3"
+              className="shrink-0 rounded-sm p-1.5 pb-3"
               style={{
                 boxShadow: '0 3px 10px rgba(180, 140, 140, 0.2), 0 1px 3px rgba(0, 0, 0, 0.06)',
               }}
@@ -126,10 +126,10 @@ export function GallerySection({ groom, bride, galleryImages = [] }: GallerySect
                   }}
                 >
                   <div
-                    className={`rounded-sm bg-[#fffaf8] p-2 pb-4 ${isLarge ? 'w-3/4' : 'w-full'}`}
+                    className={`rounded-sm bg-[#fff] p-2 pb-4 ${isLarge ? 'w-3/4' : 'w-full'}`}
                     style={{
                       boxShadow:
-                        '0 4px 12px rgba(180, 140, 140, 0.25), 0 2px 4px rgba(0, 0, 0, 0.08)',
+                        '0 4px 12px rgba(160, 140, 100, 0.2), 0 2px 4px rgba(0, 0, 0, 0.06)',
                     }}
                   >
                     <div className={isLarge ? 'aspect-[4/3]' : 'aspect-square'}>
