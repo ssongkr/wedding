@@ -2,154 +2,105 @@
 
 import { motion } from 'framer-motion';
 import { Section } from '@/components/layout/Section';
-import { useState } from 'react';
 
-interface GallerySectionProps {
-  images?: string[];
-  groomName?: string;
-  brideName?: string;
+interface PersonIntro {
+  name: string;
+  fatherName: string;
+  motherName: string;
+  birthOrder: string; // 장남, 차남, 장녀, 차녀 등
+  childhoodPhoto?: string;
 }
 
-export function GallerySection({
-  images = [],
-  groomName = '신랑',
-  brideName = '신부',
-}: GallerySectionProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+interface GallerySectionProps {
+  groom: PersonIntro;
+  bride: PersonIntro;
+  galleryImages?: string[];
+}
 
-  const nextImage = () => {
-    if (images.length > 0) {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }
-  };
-
-  const prevImage = () => {
-    if (images.length > 0) {
-      setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-    }
-  };
-
+export function GallerySection({ groom, bride, galleryImages = [] }: GallerySectionProps) {
   return (
     <Section id="gallery" className="flex items-center justify-center">
       <div className="mx-auto w-full max-w-md">
         <motion.h2
-          className="text-wedding-text mb-10 text-center text-2xl"
+          className="text-wedding-text mb-10 text-center text-3xl font-medium"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           우리의 이야기
         </motion.h2>
 
-        {images.length > 0 ? (
+        {/* 신랑 소개 - 설명 왼쪽, 사진 오른쪽 */}
+        {groom.childhoodPhoto && (
           <motion.div
-            className="soft-card overflow-hidden p-0"
+            className="flex items-center justify-center gap-5"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           >
-            <div className="relative aspect-[4/5]">
-              <motion.img
-                key={currentIndex}
-                src={images[currentIndex]}
-                alt={`Gallery image ${currentIndex + 1}`}
-                className="h-full w-full object-cover"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-
-              {/* 네비게이션 */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="text-wedding-text absolute top-1/2 left-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
-                    aria-label="이전 사진"
-                  >
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="text-wedding-text absolute top-1/2 right-3 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
-                    aria-label="다음 사진"
-                  >
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </>
-              )}
-
-              {/* 페이지 인디케이터 */}
-              {images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-                  {images.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentIndex(idx)}
-                      className={`h-2 w-2 rounded-full transition-all ${
-                        idx === currentIndex ? 'w-4 bg-white' : 'bg-white/50'
-                      }`}
-                      aria-label={`${idx + 1}번 사진`}
-                    />
-                  ))}
-                </div>
-              )}
+            <div className="text-right">
+              <p className="text-wedding-text/60 text-xs">
+                {groom.fatherName} · {groom.motherName}의 {groom.birthOrder}
+              </p>
+              <p className="text-wedding-text mt-1 text-sm font-medium">{groom.name}</p>
             </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="soft-card"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            <div className="flex aspect-[4/5] items-center justify-center">
-              <div className="text-wedding-text-muted text-center">
-                <svg
-                  className="mx-auto mb-4 h-16 w-16 opacity-50"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <p className="text-sm">사진을 추가해주세요</p>
-              </div>
+            <div className="border-wedding-pink/30 h-20 w-20 shrink-0 overflow-hidden rounded-full border">
+              <img
+                src={groom.childhoodPhoto}
+                alt={`${groom.name} 어릴적`}
+                className="h-full w-full object-cover"
+              />
             </div>
           </motion.div>
         )}
 
-        <motion.p
-          className="text-wedding-text-muted mt-8 text-center text-sm"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
-          {groomName}과 {brideName}의 아름다운 순간들
-        </motion.p>
+        {/* 신부 소개 - 사진 왼쪽, 설명 오른쪽 */}
+        {bride.childhoodPhoto && (
+          <motion.div
+            className="mt-4 flex items-center justify-center gap-5"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          >
+            <div className="border-wedding-pink/30 h-20 w-20 shrink-0 overflow-hidden rounded-full border">
+              <img
+                src={bride.childhoodPhoto}
+                alt={`${bride.name} 어릴적`}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="text-left">
+              <p className="text-wedding-text/60 text-xs">
+                {bride.fatherName} · {bride.motherName}의 {bride.birthOrder}
+              </p>
+              <p className="text-wedding-text mt-1 text-sm font-medium">{bride.name}</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* 갤러리 */}
+        {galleryImages.length > 0 && (
+          <motion.div
+            className="mt-6 grid grid-cols-3 gap-2"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+          >
+            {galleryImages.map((image, idx) => (
+              <div key={idx} className="border-wedding-pink/30 overflow-hidden rounded-lg border">
+                <img
+                  src={image}
+                  alt={`갤러리 ${idx + 1}`}
+                  className="aspect-square w-full object-cover"
+                />
+              </div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </Section>
   );

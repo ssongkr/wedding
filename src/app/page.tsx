@@ -56,9 +56,21 @@ export default function Home() {
 
         {/* 갤러리 */}
         <GallerySection
-          images={weddingInfo.gallery}
-          groomName={weddingInfo.groom.name}
-          brideName={weddingInfo.bride.name}
+          groom={{
+            name: weddingInfo.groom.name,
+            fatherName: weddingInfo.groom.father || '',
+            motherName: weddingInfo.groom.mother || '',
+            birthOrder: '차남',
+            childhoodPhoto: '/images/2.jpg',
+          }}
+          bride={{
+            name: weddingInfo.bride.name,
+            fatherName: weddingInfo.bride.father || '',
+            motherName: weddingInfo.bride.mother || '',
+            birthOrder: '차녀',
+            childhoodPhoto: '/images/3.jpg',
+          }}
+          galleryImages={weddingInfo.gallery?.slice(0, 6)}
         />
 
         <SectionDivider />

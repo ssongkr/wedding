@@ -186,8 +186,8 @@ export function AccountSection({
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <p className="text-wedding-pink mb-2 text-base tracking-widest">THANK YOU</p>
-          <p className="text-wedding-text/40 text-xs">Designed by Karam</p>
+          <p className="text-wedding-pink mb-2 text-base font-medium tracking-widest">THANK YOU</p>
+          <p className="text-wedding-text/40 text-[11px]">Designed by Karam</p>
         </motion.footer>
       </div>
     </Section>
