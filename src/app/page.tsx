@@ -60,12 +60,16 @@ export default function Home() {
           brideAccounts={weddingInfo.accounts?.bride}
           groomName={weddingInfo.groom.name}
           brideName={weddingInfo.bride.name}
-          groomContacts={[
-            { name: weddingInfo.groom.name, phone: weddingInfo.groom.phone, relation: '신랑' },
-          ]}
-          brideContacts={[
-            { name: weddingInfo.bride.name, phone: weddingInfo.bride.phone, relation: '신부' },
-          ]}
+          groomContact={{
+            name: weddingInfo.groom.name,
+            phone: weddingInfo.groom.phone,
+            relation: '신랑',
+          }}
+          brideContact={{
+            name: weddingInfo.bride.name,
+            phone: weddingInfo.bride.phone,
+            relation: '신부',
+          }}
         />
 
         <SectionDivider />

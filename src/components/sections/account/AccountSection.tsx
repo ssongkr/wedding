@@ -15,10 +15,10 @@ interface ContactInfo {
 interface AccountSectionProps {
   groomAccounts?: AccountInfo[];
   brideAccounts?: AccountInfo[];
-  groomName?: string;
-  brideName?: string;
-  groomContacts?: ContactInfo[];
-  brideContacts?: ContactInfo[];
+  groomName: string;
+  brideName: string;
+  groomContact: ContactInfo;
+  brideContact: ContactInfo;
 }
 
 function ContactItem({ contact }: { contact: ContactInfo }) {
@@ -99,26 +99,28 @@ function AccountItem({
   );
 }
 
+function GlassButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
+  return (
+    <LiquidGlass borderRadius={50} scale={30} blur={2}>
+      <button
+        onClick={onClick}
+        className="text-wedding-text flex w-full items-center justify-center gap-2 px-6 py-3 text-sm font-medium"
+      >
+        {children}
+      </button>
+    </LiquidGlass>
+  );
+}
+
 export function AccountSection({
   groomAccounts = [],
   brideAccounts = [],
-  groomName = '신랑',
-  brideName = '신부',
-  groomContacts = [],
-  brideContacts = [],
+  groomName,
+  brideName,
+  groomContact,
+  brideContact,
 }: AccountSectionProps) {
   const [activeTab, setActiveTab] = useState<'groom' | 'bride'>('groom');
-  const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
-
-  const handleCopy = async (accountNumber: string, key: string) => {
-    try {
-      await navigator.clipboard.writeText(accountNumber);
-      setCopiedIndex(key);
-      setTimeout(() => setCopiedIndex(null), 2000);
-    } catch {
-      alert('복사에 실패했습니다.');
-    }
-  };
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -141,7 +143,6 @@ export function AccountSection({
     }
   };
 
-  const currentContacts = activeTab === 'groom' ? groomContacts : brideContacts;
   const currentAccounts = activeTab === 'groom' ? groomAccounts : brideAccounts;
 
   return (
@@ -164,59 +165,32 @@ export function AccountSection({
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
         >
           <LiquidGlass scale={30} blur={2}>
-            <div className="p-5">
-              {/* 탭 버튼 */}
-              <div className="mb-5 flex gap-2">
-                <button
-                  onClick={() => setActiveTab('groom')}
-                  className={`flex-1 rounded-full py-2 text-sm transition-all ${
-                    activeTab === 'groom'
-                      ? 'bg-wedding-pink/30 text-wedding-text font-medium'
-                      : 'text-wedding-text-muted'
-                  }`}
-                >
-                  신랑측
-                </button>
-                <button
-                  onClick={() => setActiveTab('bride')}
-                  className={`flex-1 rounded-full py-2 text-sm transition-all ${
-                    activeTab === 'bride'
-                      ? 'bg-wedding-pink/30 text-wedding-text font-medium'
-                      : 'text-wedding-text-muted'
-                  }`}
-                >
-                  신부측
-                </button>
-              </div>
-
+            <div className="px-5 py-3">
               <motion.div
                 key={activeTab}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.2 }}
               >
-                <div className="divide-wedding-pink/20 divide-y">
-                  {currentContacts.map((contact, idx) => (
-                    <ContactItem key={idx} contact={contact} />
-                  ))}
-                </div>
+                <ContactItem contact={groomContact} />
+                <ContactItem contact={brideContact} />
 
                 {/* 구분선 */}
-                {currentContacts.length > 0 && currentAccounts.length > 0 && (
+                {/* {currentContacts.length > 0 && currentAccounts.length > 0 && (
                   <div className="bg-wedding-pink/20 my-4 h-px" />
-                )}
+                )} */}
 
                 {/* 계좌 */}
                 {currentAccounts.length > 0 && (
-                  <div className="divide-wedding-pink/20 divide-y">
-                    {currentAccounts.map((account, idx) => (
+                  <div className="divide-wedding-pink">
+                    {/* {currentAccounts.map((account, idx) => (
                       <AccountItem
                         key={idx}
                         account={account}
                         onCopy={() => handleCopy(account.accountNumber, `${activeTab}-${idx}`)}
                         copied={copiedIndex === `${activeTab}-${idx}`}
                       />
-                    ))}
+                    ))} */}
                   </div>
                 )}
               </motion.div>
@@ -226,27 +200,23 @@ export function AccountSection({
 
         {/* 공유 버튼 */}
         <motion.div
+          className="mt-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
         >
-          <LiquidGlass className="mt-6" scale={30} blur={2}>
-            <button
-              onClick={handleShare}
-              className="text-wedding-text flex w-full items-center justify-center gap-2 px-6 py-3 text-sm font-medium"
-            >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                />
-              </svg>
-              청첩장 공유하기
-            </button>
-          </LiquidGlass>
+          <GlassButton onClick={handleShare}>
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+              />
+            </svg>
+            청첩장 공유하기
+          </GlassButton>
         </motion.div>
 
         {/* 푸터 */}
@@ -255,7 +225,7 @@ export function AccountSection({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.3 }}
         >
           <p className="text-wedding-pink mb-2 text-xs tracking-widest">THANK YOU</p>
           <p className="text-wedding-text-muted text-sm">
