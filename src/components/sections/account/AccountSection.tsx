@@ -249,8 +249,8 @@ function GlassButton({
           onClick={onClick}
           className={`w-full rounded-2xl border px-6 py-3 text-sm font-semibold outline-none select-none ${
             isPrimary
-              ? 'text-wedding-text bg-wedding-pink/25 border-wedding-pink/30'
-              : 'text-wedding-text bg-wedding-pink/8 border-wedding-pink/15'
+              ? 'text-wedding-text bg-wedding-pink/15 border-wedding-pink/20'
+              : 'text-wedding-text bg-wedding-pink/15 border-wedding-pink/20'
           }`}
         >
           {children}
