@@ -7,6 +7,7 @@ import { AccountSection } from '@/components/sections/account/AccountSection';
 import { GlobalParallaxBackground } from '@/components/GlobalParallaxBackground';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { weddingInfo, transportInfo } from '@/constants/weddingData';
+import { asset } from '@/lib/basePath';
 import { useEffect } from 'react';
 
 export default function Home() {
@@ -37,7 +38,7 @@ export default function Home() {
           brideName={weddingInfo.bride.name}
           weddingDate={weddingInfo.date}
           weddingTime={weddingInfo.time}
-          mainImage="/images/1.jpg"
+          mainImage={asset('/images/1.jpg')}
         />
 
         <SectionDivider />
@@ -66,16 +67,16 @@ export default function Home() {
             fatherName: weddingInfo.groom.father || '',
             motherName: weddingInfo.groom.mother || '',
             birthOrder: '차남',
-            childhoodPhoto: '/images/2.jpg',
+            childhoodPhoto: asset('/images/2.jpg'),
           }}
           bride={{
             name: weddingInfo.bride.name,
             fatherName: weddingInfo.bride.father || '',
             motherName: weddingInfo.bride.mother || '',
             birthOrder: '차녀',
-            childhoodPhoto: '/images/3.jpg',
+            childhoodPhoto: asset('/images/3.jpg'),
           }}
-          galleryImages={weddingInfo.gallery?.slice(0, 3)}
+          galleryImages={weddingInfo.gallery?.slice(0, 3).map(asset)}
         />
 
         <SectionDivider />
