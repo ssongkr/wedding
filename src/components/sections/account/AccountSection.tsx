@@ -187,7 +187,7 @@ function AccountBottomSheet({
         <>
           {/* 배경 오버레이 */}
           <motion.div
-            className="fixed inset-0 z-50 bg-black/40"
+            className="fixed inset-0 z-50 bg-black/60"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -214,9 +214,7 @@ function AccountBottomSheet({
               <div className="bg-wedding-text/15 h-1 w-9 rounded-full" />
             </div>
 
-            <p className="text-wedding-text mb-3 text-[16px] font-semibold">
-              계좌번호 안내
-            </p>
+            <p className="text-wedding-text mb-3 text-[16px] font-semibold">계좌번호 안내</p>
 
             <div>
               {groomAccounts?.map((account, idx) => renderAccount(account, `groom-${idx}`))}
@@ -229,7 +227,17 @@ function AccountBottomSheet({
   );
 }
 
-function GlassButton({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
+function GlassButton({
+  children,
+  onClick,
+  variant = 'primary',
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: 'primary' | 'secondary';
+}) {
+  const isPrimary = variant === 'primary';
+
   return (
     <motion.div
       whileTap={{ scale: 0.97, filter: 'brightness(0.95)' }}
@@ -239,7 +247,11 @@ function GlassButton({ children, onClick }: { children: React.ReactNode; onClick
       <LiquidGlass borderRadius={50} className="block" scale={30} blur={2}>
         <button
           onClick={onClick}
-          className="text-wedding-text bg-wedding-pink/25 border-wedding-pink/30 w-full rounded-full border px-6 py-3 text-sm font-semibold outline-none select-none"
+          className={`w-full rounded-full border px-6 py-3 text-sm font-semibold outline-none select-none ${
+            isPrimary
+              ? 'text-wedding-text bg-wedding-pink/25 border-wedding-pink/30'
+              : 'text-wedding-text bg-wedding-pink/8 border-wedding-pink/15'
+          }`}
         >
           {children}
         </button>
@@ -341,7 +353,9 @@ export function AccountSection({
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
         >
-          <GlassButton onClick={handleShare}>청첩장 공유하기</GlassButton>
+          <GlassButton variant="secondary" onClick={handleShare}>
+            청첩장 공유하기
+          </GlassButton>
         </motion.div>
 
         {/* 푸터 */}

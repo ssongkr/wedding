@@ -7,6 +7,7 @@ import { AccountSection } from '@/components/sections/account/AccountSection';
 import { GlobalParallaxBackground } from '@/components/GlobalParallaxBackground';
 import { SectionDivider } from '@/components/ui/SectionDivider';
 import { weddingInfo, transportInfo } from '@/constants/weddingData';
+import { useEffect } from 'react';
 
 export default function Home() {
   const formatDate = (dateStr: string) => {
@@ -18,6 +19,10 @@ export default function Home() {
     const weekday = weekdays[date.getDay()];
     return `${year}년 ${month}월 ${day}일 ${weekday}요일`;
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
 
   return (
     <main className="relative">

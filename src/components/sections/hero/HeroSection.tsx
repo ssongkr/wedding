@@ -34,6 +34,7 @@ export function HeroSection({
         <div className="relative aspect-[1/1]">
           <div className="relative h-full w-full overflow-hidden">
             <img src={mainImage} alt="Wedding" className="h-full w-full object-cover" />
+            <div className="absolute inset-0 bg-black/10" />
           </div>
           <div
             className="pointer-events-none absolute inset-0 backdrop-blur-[2px]"
